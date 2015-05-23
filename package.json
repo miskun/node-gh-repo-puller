@@ -1,0 +1,27 @@
+{
+  "name": "node-gh-repo-puller",
+  "version": "0.1.0",
+  "description": "Simple Github repo puller for Node",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miskun/node-gh-repo-puller.git"
+  },
+  "keywords": [
+    "github"
+  ],
+  "author": "Miska Kaipiainen <miska.kaipiainen@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miskun/node-gh-repo-puller/issues"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "homepage": "https://github.com/miskun/node-gh-repo-puller",
+  "dependencies": {
+    "request": "~2.55.0",
+    "fs-extended": "~0.2.0",
+    "unzip": "~0.1.11"
+  }
+}
