@@ -13,8 +13,9 @@ var noop = function(){};
  *
  * user:    The Github user
  * repo:    The Github repository
- * dir:     [optional] The Github repository directory to be downloaded. Default: "/"
  * target:  The target output directory
+ * dir:     [optional] The GitHub repository directory to be downloaded. Default: "/"
+ * branch:  [optional] The GitHub repository branch name. Default: "master"
  *
  */
 function fetch(options, callback){
@@ -22,12 +23,15 @@ function fetch(options, callback){
 
     if(options.user && options.repo && options.target){
 
+        // Default branch
+        var ghBranch = options.branch || "master";
+
         // Github archive URL
-        var ghUrl = "https://github.com/"+options.user+"/"+options.repo+"/archive/master.zip";
+        var ghUrl = "https://github.com/"+options.user+"/"+options.repo+"/archive/"+ghBranch+".zip";
 
         // Ensure paths
-        var targetPath = path.resolve(__dirname, options.target);
-        var workPath = path.resolve(__dirname, "_ghrepopullerwork/");
+        var targetPath = path.resolve(options.target);
+        var workPath = path.resolve("_ghrepopullerwork/");
 
         // Ensure we are not trying to target current directory
         if(__dirname == targetPath){
@@ -40,7 +44,7 @@ function fetch(options, callback){
         fs.emptyDirSync(workPath);
 
         // work file path
-        var workFile = path.resolve(workPath, 'master.zip');
+        var workFile = path.resolve(workPath, 'node-gh-repo-puller-tmp.zip');
 
         // get the archive from Github
         request
@@ -65,11 +69,12 @@ function fetch(options, callback){
                     // ensure content path exists
                     if (fs.existsSync(contentPath)){
 
-                        // clean target directory
-                        fs.deleteDirSync(targetPath);
+                        // ensure target directory exists and is empty
+                        if (!fs.existsSync(targetPath)) fs.mkdirSync(targetPath);
+                        fs.emptyDirSync(targetPath);
 
-                        // move content to target
-                        fs.moveDirSync(contentPath, targetPath);
+                        // copy content to target
+                        fs.copyDirSync(contentPath, targetPath);
 
                         // clean work directory
                         fs.deleteDirSync(workPath);

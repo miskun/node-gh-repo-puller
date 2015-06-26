@@ -1,6 +1,6 @@
 {
   "name": "node-gh-repo-puller",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple Github repo puller for Node",
   "main": "index.js",
   "repository": {
